@@ -1,0 +1,396 @@
+/* :root=variable que tu peux apeller comme sa cest possible de changer de palette de 
+couleur en touts temps*/
+
+:root {
+  --color1: rgb(0, 219, 161);
+  --color2: rgb(105, 175, 157);
+  --color3: rgb(1, 89, 66);
+  --color4: rgb(0, 46, 34);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "JetBrains";
+  src: url(./assets/fonts/JetBrainsMono-VariableFont_wght.ttf);
+}
+
+body {
+  background: url(./assets/img/pexels-pixabay-41951.jpg) center/cover;
+  height: 100vh;
+  font-family: "JetBrains";
+  /* pour apeller les variable du :root creer plus haut*/
+  color: var(--color1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.card {
+  background-color: rgba(0, 0, 0, 0.502);
+  /*Largeur 100% mais - 25px de chaque coter (calc) sert a calculer selon vos besoin*/
+  width: calc(100% - 50px);
+  /* 20px=haut 20px=gauche droite 6px=bas*/
+  padding: 20px 20px 6px;
+  box-shadow: 0px 0px 17px 12px #000000c4;
+  border-radius: 5px;
+  /*sert a ajouter un filtre au background*/
+  backdrop-filter: blur(2px);
+}
+/*pour ajouter un element dans sont parents
+sans passer par html exemple un etoile(icon dans cette ex)*/
+
+.card::before {
+  content: "\2726";
+  color: var(--color2);
+  text-shadow: 0px 0px 5px #f9f9f9c7;
+  position: absolute;
+  top: 3px;
+  right: 15px;
+  /*utilise font size pour grossir un icon*/
+  font-size: 2.4rem;
+}
+
+h1 {
+  font-size: 5.5vw;
+  color: var(--color2);
+  margin-bottom: 24px;
+  text-shadow: 0px 0px 20px #f9f9f9c7;
+  cursor: default;
+  /*ajouter une position relative au parents pour que le after absolute sois restrein 
+  a sont parent qui est h1 ici*/
+  position: relative;
+}
+
+/*creer une separation avec un before ou un after
+oubliger be mettre un content vide ou pas et une position absolute */
+h1::after {
+  content: "";
+  position: absolute;
+  background-color: var(--color2);
+  height: 1.5px;
+  width: 100%;
+  bottom: -12px;
+  left: 50%;
+  /*scale a 0 = pour cacher la barre en vue dune animation*/
+  transform: translatex(-50%) scaleX(0);
+  /*le forwards sert a l<empeche de disparete une fois lanimation terminer
+  on aurai pue mettrre un repaet aussi*/
+  animation: h1anim 5s ease-in-out forwards;
+  transform-origin: center;
+}
+
+@keyframes h1anim {
+  100% {
+    transform: translatex(-50%) scaleX(1);
+  }
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+
+.polygon-container {
+  /*pour donner un ombre a un element generer comme si dessou il faux passer par sont container
+  et non direct avec un boxshadow et il faux utiliser un filter drop shadow*/
+  filter: drop-shadow(0px 6px 2.85px var(--color3));
+  /*pour placer un element generer quand on est en grid seulment*/
+  place-self: center top;
+}
+
+/*utiliser des outils disponible sur le web pour la forme et la couleur du polygon*/
+.polygon {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  height: 100px;
+  width: 100px;
+  background: rgb(0, 219, 161);
+  background: radial-gradient(
+    circle,
+    rgba(0, 219, 161, 1) 17%,
+    rgba(105, 175, 157, 1) 36%,
+    rgba(0, 46, 34, 1) 71%
+  );
+  margin: 20px;
+  filter: brightness(125%);
+}
+
+p {
+  line-height: 20px;
+  margin: 20px;
+  max-height: 100px; /* Ajustez la hauteur maximale selon vos besoins */
+  overflow: auto;
+  cursor: default;
+  /* Pour masquer les barres de défilement Webkit (Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 0.1em;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+}
+
+p::selection {
+  background-color: var(--color4);
+  color: var(--color2);
+}
+
+h1::selection {
+  background-color: var(--color4);
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0px 30px;
+  /*ajoluter la perspective au parent pour faire leffet 3D*/
+  perspective: 35px;
+}
+
+/*pour donner un style au checkbox on les apelles comme ceci*/
+input[type="checkbox"] {
+  display: none;
+}
+
+/*(checked)=pour faire un action quand la case est cocher(+label)=pour faire un action sur le label*/
+input[type="checkbox"]:checked + label {
+  background: radial-gradient(
+    circle,
+    rgba(0, 219, 161, 1) 15%,
+    rgba(105, 175, 157, 1) 30%,
+    rgba(0, 46, 34, 1) 71%
+  );
+  box-shadow: 0px 0px 17px 2px var(--color1);
+  color: var(--color4);
+  filter: brightness(150%);
+}
+
+/*metre du style sur le label*/
+label {
+  cursor: pointer;
+  border: 2px solid var(--color3);
+  background-color: var(--color4);
+  padding: 6px;
+  border-radius: 5px;
+  transition: 0.2s;
+  /*empeche le user de selectioner le texte*/
+  user-select: none;
+  min-width: 150px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+label:nth-of-type(1):hover {
+  animation: label1 1s infinite linear;
+}
+
+@keyframes label1 {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*pas oublier la perspective sur le parents pour le 3D*/
+label:nth-of-type(2):hover {
+  animation: label2 3.5s infinite linear;
+}
+
+@keyframes label2 {
+  33% {
+    transform: translateZ(32px);
+  }
+  66% {
+    transform: translateZ(-32px);
+  }
+  100% {
+    transform: translateZ(0);
+  }
+}
+
+label:nth-of-type(3):hover {
+  animation: label3 1.7s infinite linear;
+}
+
+@keyframes label3 {
+  33% {
+    opacity: 66%;
+  }
+  66% {
+    opacity: 33%;
+  }
+  80% {
+    opacity: 5%;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.e-mail {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.e-mail input {
+  padding: 8px;
+  border-radius: 10px;
+  /*suprime le contour*/
+  outline: none;
+  /*pour que la bordur sois la avant linput pour pas desformer la page*/
+  border: 1px solid transparent;
+  transition: 0.4s;
+  text-align: center;
+  color: var(--color1);
+  /*pour rendre adaptatif au ecran sans passer par media query*/
+  width: 35%;
+  max-width: 300px;
+  min-width: 150px;
+  background-color: var(--color4);
+  font-size: 0.8rem;
+}
+
+/*focus=quand lutilisateur et sur la boite type=text pour choisir linput*/
+input[type="text"]:focus {
+  background: transparent;
+  border: 1px solid var(--color2);
+  border-radius: 95px;
+}
+
+input[type="text"]::placeholder {
+  color: var(--color1);
+  font-size: medium;
+}
+
+button {
+  cursor: pointer;
+  background-color: var(--color4);
+  border: 2px solid var(--color3);
+  color: var(--color1);
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 150px;
+  margin: 0 auto;
+  /*dois dire display block pacre que le bouton est dorigine en 
+  inline block donc ce centre pas avec la margin 0 auto*/
+  display: block;
+  /*mettre la transition dans le principal et non dans le hover pour quel 
+fonctionne a la sortis et l<entree*/
+  transition: 0.2s;
+}
+
+button:hover {
+  letter-spacing: 2px;
+}
+
+button:active {
+  scale: 1.2;
+}
+/*pour creer un effet et conecter le hover bouton a (a) */
+button:hover + a,
+a:hover {
+  opacity: 1;
+  transform: translatey(0);
+  padding-top: 5px;
+}
+
+a {
+  color: var(--color1);
+  text-align: center;
+  display: block;
+  opacity: 0;
+  transform: translatey(20px);
+  transition: 0.3s;
+}
+
+a:visited {
+  color: var(--color2);
+}
+
+img {
+  height: 60px;
+  position: absolute;
+  filter: drop-shadow(0px 8px 5px rgb(230, 255, 37));
+  z-index: 1;
+  animation: spaceship 40s infinite linear;
+}
+
+@keyframes spaceship {
+  0% {
+    top: 2%;
+    left: 2%;
+    transform: rotate(30deg);
+  }
+  10% {
+    top: 25%;
+    left: 75%;
+    transform: rotate(180deg);
+  }
+  20% {
+    top: 100%;
+    left: 10%;
+    transform: rotate(360deg);
+  }
+  30% {
+    top: 60%;
+    left: 95%;
+    transform: rotate(-30deg);
+  }
+  40% {
+    top: 20%;
+    left: 25%;
+    transform: rotate(75deg);
+  }
+  50% {
+    top: 90%;
+    left: 60%;
+    transform: rotate(540deg);
+  }
+  60% {
+    top: 88%;
+    left: 5%;
+    transform: rotate(360deg);
+  }
+  70% {
+    top: 25%;
+    left: 66%;
+    transform: rotate(90deg);
+  }
+  80% {
+    top: 12%;
+    left: 30%;
+    transform: rotate(-120deg);
+  }
+  90% {
+    top: 77%;
+    left: 55%;
+    transform: rotate(1200deg);
+  }
+  100% {
+    top: 2%;
+    left: 2%;
+    transform: rotate(30deg);
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    place-items: center;
+  }
+  .checkbox-container {
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  label {
+    margin: 5px;
+  }
+}
